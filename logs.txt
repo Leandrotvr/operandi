@@ -1,58 +1,147 @@
-Error: Command "npm run build" exited with 1
-
-2025-08-24T19:58:53.340Z  Running build in Washington, D.C., USA (East) – iad1
-2025-08-24T19:58:53.340Z  Build machine configuration: 2 cores, 8 GB
-2025-08-24T19:58:53.375Z  Retrieving list of deployment files...
-2025-08-24T19:58:53.470Z  Previous build caches not available
-2025-08-24T19:58:53.872Z  Downloading 70 deployment files...
-2025-08-24T19:58:54.555Z  Running "vercel build"
-2025-08-24T19:58:54.967Z  Vercel CLI 46.0.2
-2025-08-24T19:58:55.360Z  Installing dependencies...
-2025-08-24T19:59:19.497Z
-2025-08-24T19:59:19.498Z  added 561 packages in 24s
-2025-08-24T19:59:19.498Z
-2025-08-24T19:59:19.499Z  180 packages are looking for funding
-2025-08-24T19:59:19.499Z    run `npm fund` for details
-2025-08-24T19:59:19.595Z  Detected Next.js version: 15.5.0
-2025-08-24T19:59:19.602Z  Running "npm run build"
-2025-08-24T19:59:19.718Z
-2025-08-24T19:59:19.719Z  > operandi@0.1.0 build
-2025-08-24T19:59:19.719Z  > next build --turbopack
-2025-08-24T19:59:19.719Z
-2025-08-24T19:59:20.360Z  Attention: Next.js now collects completely anonymous telemetry regarding usage.
-2025-08-24T19:59:20.361Z  This information is used to shape Next.js' roadmap and prioritize features.
-2025-08-24T19:59:20.362Z  You can learn more, including how to opt-out if you'd not like to participate in this anonymous program, by visiting the following URL:
-2025-08-24T19:59:20.362Z  https://nextjs.org/telemetry
-2025-08-24T19:59:20.362Z
-2025-08-24T19:59:20.423Z     ▲ Next.js 15.5.0 (Turbopack)
-2025-08-24T19:59:20.424Z     - Environments: .env
-2025-08-24T19:59:20.425Z
-2025-08-24T19:59:20.508Z     Creating an optimized production build ...
-2025-08-24T19:59:21.191Z   ⚠ Found lockfile missing swc dependencies, run next locally to automatically patch
-2025-08-24T19:59:32.099Z   ✓ Finished writing to disk in 14ms
-2025-08-24T19:59:32.127Z   ✓ Compiled successfully in 11.1s
-2025-08-24T19:59:32.140Z     Skipping linting
-2025-08-24T19:59:32.141Z     Checking validity of types ...
-2025-08-24T19:59:37.975Z  Failed to compile.
-2025-08-24T19:59:37.976Z
-2025-08-24T19:59:37.976Z  ./app/api/cv/route.ts:10:23
-2025-08-24T19:59:37.976Z  Type error: Argument of type 'Buffer<ArrayBufferLike>' is not assignable to parameter of type 'BodyInit | null | undefined'.
-2025-08-24T19:59:37.976Z    Type 'Buffer<ArrayBufferLike>' is missing the following properties from type 'URLSearchParams': size, append, delete, get, and 2 more.
-2025-08-24T19:59:37.976Z
-2025-08-24T19:59:37.977Z     8 |   const html = await fs.readFile(filePath);
-2025-08-24T19:59:37.977Z     9 |
-2025-08-24T19:59:37.977Z  > 10 |   return new Response(html, {
-2025-08-24T19:59:37.977Z       |                       ^
-2025-08-24T19:59:37.978Z    11 |     headers: {
-2025-08-24T19:59:37.978Z    12 |       "Content-Type": "text/html; charset=utf-8",
-2025-08-24T19:59:37.978Z    13 |       "Content-Disposition": 'attachment; filename="CV_Leandro_Maciel.html"',
-2025-08-24T19:59:38.002Z  Next.js build worker exited with code: 1 and signal: null
-2025-08-24T19:59:38.023Z  Error: Command "npm run build" exited with 1
+PS C:\Users\Leandro Maciel\Documents\operandi> # =========================
+PS C:\Users\Leandro Maciel\Documents\operandi> # Operandi · CV online + descarga forzada
+PS C:\Users\Leandro Maciel\Documents\operandi> # =========================
 PS C:\Users\Leandro Maciel\Documents\operandi>
-PS C:\Users\Leandro Maciel\Documents\operandi> Write-Host ""
+PS C:\Users\Leandro Maciel\Documents\operandi> # 0) Ir SIEMPRE al proyecto
+PS C:\Users\Leandro Maciel\Documents\operandi> cd "C:\Users\Leandro Maciel\Documents\operandi"
+PS C:\Users\Leandro Maciel\Documents\operandi>
+PS C:\Users\Leandro Maciel\Documents\operandi> # 1) Asegurar CV estático en /public (placeholder si no existe)
+PS C:\Users\Leandro Maciel\Documents\operandi> if (-not (Test-Path .\public)) { New-Item -ItemType Directory -Path .\public | Out-Null }
+PS C:\Users\Leandro Maciel\Documents\operandi> if (-not (Test-Path .\public\cv.html)) {
+>> @'
+>> <!doctype html>
+>> <html lang="es">
+>>   <head>
+>>     <meta charset="utf-8"/>
+>>     <meta name="viewport" content="width=device-width,initial-scale=1"/>
+>>     <title>CV · Leandro Maciel</title>
+>>     <style>
+>>       body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; line-height: 1.5; margin: 32px; color:#0f172a; }
+>>       h1 { margin: 0 0 4px 0; font-size: 28px; }
+>>       h2 { margin-top: 24px; font-size: 18px; }
+>>       .muted{ color:#475569; }
+>>       ul{ margin: 8px 0 0 20px; }
+>>     </style>
+>>   </head>
+>>   <body>
+>>     <h1>Leandro Maciel</h1>
+>>     <div class="muted">Frontend (Next.js/TypeScript/Tailwind) · Prisma + PostgreSQL (Supabase) · NextAuth</div>
+>>     <p class="muted">Email: leandrotvr@gmail.com · WhatsApp: +54 3777 416857 · LinkedIn: /in/leandromaciel581/ · GitHub: /Leandrotvr</p>
+>>
+>>     <h2>Competencias</h2>
+>>     <ul>
+>>       <li>Next.js (App Router), TypeScript, Tailwind, shadcn/ui</li>
+>>       <li>Prisma ORM + PostgreSQL (Supabase), NextAuth</li>
+>>       <li>Diseño de UI simple, accesible y responsive</li>
+>>     </ul>
+>>
+>>     <h2>Experiencia/Proyectos</h2>
+>>     <ul>
+>>       <li>Portafolio “Operandi”: UI moderna, auth de demostración y conexión a Supabase</li>
+>>     </ul>
+>>
+>>     <h2>Contacto</h2>
+>>     <ul>
+>>       <li>Email: leandrotvr@gmail.com</li>
+>>       <li>WhatsApp: +54 3777 416857</li>
+>>       <li>LinkedIn: https://www.linkedin.com/in/leandromaciel581/</li>
+>>       <li>GitHub: https://github.com/Leandrotvr/</li>
+>>     </ul>
+>>   </body>
+>> </html>
+>> '@ | Out-File .\public\cv.html -Encoding utf8
+>> }
+PS C:\Users\Leandro Maciel\Documents\operandi>
+PS C:\Users\Leandro Maciel\Documents\operandi> # 2) Endpoint /api/cv para DESCARGA FORZADA (attachment) + cache en CDN
+PS C:\Users\Leandro Maciel\Documents\operandi> if (-not (Test-Path .\app\api\cv)) { New-Item -ItemType Directory -Path .\app\api\cv | Out-Null }
+PS C:\Users\Leandro Maciel\Documents\operandi> @'
+>> import { promises as fs } from "fs";
+>> import path from "path";
+>>
+>> /**
+>>  * Devuelve el CV como descarga (attachment).
+>>  * Origen: public/cv.html — estático (apto CDN)
+>>  */
+>> export async function GET() {
+>>   try {
+>>     const filePath = path.join(process.cwd(), "public", "cv.html");
+>>     const buf = await fs.readFile(filePath);
+>>     const html = buf.toString("utf-8");
+>>
+>>     return new Response(html, {
+>>       headers: {
+>>         "Content-Type": "text/html; charset=utf-8",
+>>         "Content-Disposition": "attachment; filename=\"CV_Leandro_Maciel.html\"",
+>>         "Cache-Control": "public, max-age=0, s-maxage=3600, stale-while-revalidate=86400"
+>>       },
+>>     });
+>>   } catch (err) {
+>>     console.error("[api/cv] error:", err);
+>>     return new Response("CV no disponible", { status: 500 });
+>>   }
+>> }
+>> '@ | Out-File -LiteralPath .\app\api\cv\route.ts -Encoding utf8
+PS C:\Users\Leandro Maciel\Documents\operandi>
+PS C:\Users\Leandro Maciel\Documents\operandi> # 3) Añadir 2 botones (Ver CV / Descargar CV) en la tarjeta de contratación
+PS C:\Users\Leandro Maciel\Documents\operandi> $hire = ".\components\hire-card.tsx"
+PS C:\Users\Leandro Maciel\Documents\operandi> if (Test-Path $hire) {
+>>   $src = Get-Content $hire -Raw
+>>
+>>   # A) Garantizar que existe un contenedor para botones; los inyectamos antes de </section>
+>>   $buttons = @'
+>>   <div className="mt-4 flex flex-wrap gap-3">
+>>     <a className="rounded-md border border-white/20 px-4 py-2 hover:bg-white hover:text-black transition text-center"
+>>        href="/cv.html" target="_blank" rel="noopener">
+>>       Ver CV
+>>     </a>
+>>     <a className="rounded-md border border-white/20 px-4 py-2 hover:bg-white hover:text-black transition text-center"
+>>        href="/api/cv">
+>>       Descargar CV
+>>     </a>
+>>   </div>
+>> '@
+>>
+>>   if ($src -notmatch 'href="/cv\.html"') {
+>>     # Insertar los botones justo antes del cierre de la section
+>>     $src = $src -replace '</section>\s*$', ($buttons + "`r`n</section>")
+>>   }
+>>
+>>   Set-Content $hire $src -Encoding utf8
+>> } else {
+>>   Write-Host "⚠ No encontré components\hire-card.tsx. Saltéo la inserción de botones." -ForegroundColor Yellow
+>> }
+PS C:\Users\Leandro Maciel\Documents\operandi>
+PS C:\Users\Leandro Maciel\Documents\operandi> # 4) Commit & Push (desencadena deploy en Vercel)
+PS C:\Users\Leandro Maciel\Documents\operandi> git add -A
+warning: in the working copy of 'app/api/cv/route.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'components/hire-card.tsx', LF will be replaced by CRLF the next time Git touches it
+PS C:\Users\Leandro Maciel\Documents\operandi> git commit -m "feat(cv): servir cv.html estatico + endpoint /api/cv de descarga; botones Ver/Descargar CV" 2>$null
+[master 5894311] feat(cv): servir cv.html estatico + endpoint /api/cv de descarga; botones Ver/Descargar CV
+ 3 files changed, 78 insertions(+), 8 deletions(-)
+ create mode 100644 logs.txt
+PS C:\Users\Leandro Maciel\Documents\operandi> # Detecta rama actual y empuja
+PS C:\Users\Leandro Maciel\Documents\operandi> $branch = (& git rev-parse --abbrev-ref HEAD).Trim()
+PS C:\Users\Leandro Maciel\Documents\operandi> if ($branch) {
+>>   git push -u origin $branch
+>> } else {
+>>   Write-Host "No pude detectar la rama. Si usás 'main': git branch -M main; git push -u origin main" -ForegroundColor Yellow
+>> }
+Enumerating objects: 16, done.
+Counting objects: 100% (16/16), done.
+Delta compression using up to 2 threads
+Compressing objects: 100% (8/8), done.
+Writing objects: 100% (9/9), 2.53 KiB | 323.00 KiB/s, done.
+Total 9 (delta 5), reused 0 (delta 0), pack-reused 0 (from 0)
+remote: Resolving deltas: 100% (5/5), completed with 5 local objects.
+To https://github.com/Leandrotvr/operandi.git
+   66e580e..5894311  master -> master
+branch 'master' set up to track 'origin/master'.
+PS C:\Users\Leandro Maciel\Documents\operandi>
+PS C:\Users\Leandro Maciel\Documents\operandi> Write-Host "`n✅ Listo: " -NoNewline -ForegroundColor Green
 
-PS C:\Users\Leandro Maciel\Documents\operandi> Write-Host "✅ Listo. Cuando termine el build, abrí: $VERCEL_URL" -ForegroundColor Green
-✅ Listo. Cuando termine el build, abrí: https://operandi.vercel.app
-PS C:\Users\Leandro Maciel\Documents\operandi> Write-Host "   Si ves errores de build, pásame el log de Vercel y lo ajustamos."
-   Si ves errores de build, pásame el log de Vercel y lo ajustamos.
+✅ Listo:
+PS C:\Users\Leandro Maciel\Documents\operandi> Write-Host "• Ver online: /cv.html  • Descargar: /api/cv"
+• Ver online: /cv.html  • Descargar: /api/cv
+PS C:\Users\Leandro Maciel\Documents\operandi> Write-Host "Vercel creará el deployment en cuanto reciba el push."
+Vercel creará el deployment en cuanto reciba el push.
 PS C:\Users\Leandro Maciel\Documents\operandi>
