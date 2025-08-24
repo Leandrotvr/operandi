@@ -1,31 +1,31 @@
-PS C:\Users\Leandro Maciel> # Ir al proyecto
-PS C:\Users\Leandro Maciel> cd "C:\Users\Leandro Maciel\Documents\operandi"
+PS C:\Users\Leandro Maciel\Documents\operandi> try {
+>>   $j = vercel ls operandi --json 2>$null
+>>   if ($j) {
+>>     $latest = $j | ConvertFrom-Json | Select-Object -First 1
+>>     $url = "https://$($latest.url)"
+>>     Write-Host "`nÚltimo deployment: $url  (estado: $($latest.state))" -ForegroundColor Cyan
+>>     if ($latest.state -eq "READY") { try { Start-Process $url } catch {} } else { vercel inspect $url --logs }
+>>   }
+>> } catch {}
+PS C:\Users\Leandro Maciel\Documents\operandi> # Ir a tu proyecto
+PS C:\Users\Leandro Maciel\Documents\operandi> cd "C:\Users\Leandro Maciel\Documents\operandi"
 PS C:\Users\Leandro Maciel\Documents\operandi>
-PS C:\Users\Leandro Maciel\Documents\operandi> # Variables de entorno en Vercel (Producción)
-PS C:\Users\Leandro Maciel\Documents\operandi> Write-Output "postgresql://postgres:wdFZUdKFrkgss7rq@db.jxgexrlhubrmxezdsuvq.supabase.co:5432/postgres" | vercel env add DATABASE_URL production
-Vercel CLI 46.0.2
-Error: A variable with the name `DATABASE_URL` already exists for the target production on branch undefined
-PS C:\Users\Leandro Maciel\Documents\operandi> Write-Output "https://operandi.vercel.app" | vercel env add NEXTAUTH_URL production
-Vercel CLI 46.0.2
-Error: A variable with the name `NEXTAUTH_URL` already exists for the target production on branch undefined
-PS C:\Users\Leandro Maciel\Documents\operandi> Write-Output "WqAPcDLUW6rUZN6k" | vercel env add NEXTAUTH_SECRET production
-Vercel CLI 46.0.2
-Error: A variable with the name `NEXTAUTH_SECRET` already exists for the target production on branch undefined
+PS C:\Users\Leandro Maciel\Documents\operandi> # URL de producción en Vercel
+PS C:\Users\Leandro Maciel\Documents\operandi> $prodUrl = "https://operandi-bl9t6eekp-leandrotvrs-projects.vercel.app"
 PS C:\Users\Leandro Maciel\Documents\operandi>
-PS C:\Users\Leandro Maciel\Documents\operandi> # Datos públicos
-PS C:\Users\Leandro Maciel\Documents\operandi> Write-Output "Leandro Maciel" | vercel env add NEXT_PUBLIC_NAME production
-Vercel CLI 46.0.2
-Error: A variable with the name `NEXT_PUBLIC_NAME` already exists for the target production on branch undefined
-PS C:\Users\Leandro Maciel\Documents\operandi> Write-Output "leandrotvr@gmail.com" | vercel env add NEXT_PUBLIC_EMAIL production
-Vercel CLI 46.0.2
-Error: A variable with the name `NEXT_PUBLIC_EMAIL` already exists for the target production on branch undefined
-PS C:\Users\Leandro Maciel\Documents\operandi> Write-Output "+543777416857" | vercel env add NEXT_PUBLIC_PHONE production
-Vercel CLI 46.0.2
-Error: A variable with the name `NEXT_PUBLIC_PHONE` already exists for the target production on branch undefined
-PS C:\Users\Leandro Maciel\Documents\operandi> Write-Output "https://www.linkedin.com/in/leandromaciel581/" | vercel env add NEXT_PUBLIC_LINKEDIN production
-Vercel CLI 46.0.2
-Error: A variable with the name `NEXT_PUBLIC_LINKEDIN` already exists for the target production on branch undefined
-PS C:\Users\Leandro Maciel\Documents\operandi> Write-Output "https://github.com/Leandrotvr/" | vercel env add NEXT_PUBLIC_GITHUB production
-Vercel CLI 46.0.2
-Error: A variable with the name `NEXT_PUBLIC_GITHUB` already exists for the target production on branch undefined
+PS C:\Users\Leandro Maciel\Documents\operandi> # Hacer la petición y mostrar estado + primeros 300 caracteres del HTML
+PS C:\Users\Leandro Maciel\Documents\operandi> try {
+>>     $resp = Invoke-WebRequest -Uri $prodUrl -UseBasicParsing
+>>     Write-Host "✅ Respuesta recibida desde $prodUrl" -ForegroundColor Green
+>>     Write-Host "Código de estado: $($resp.StatusCode)" -ForegroundColor Cyan
+>>     Write-Host "`n--- Inicio del HTML ---`n"
+>>     $resp.Content.Substring(0, [Math]::Min(300, $resp.Content.Length))
+>>     Write-Host "`n--- Fin de vista previa ---" -ForegroundColor Yellow
+>> }
+>> catch {
+>>     Write-Host "❌ Error al conectar con $prodUrl" -ForegroundColor Red
+>>     Write-Host $_.Exception.Message -ForegroundColor Red
+>> }
+❌ Error al conectar con https://operandi-bl9t6eekp-leandrotvrs-projects.vercel.app
+Error en el servidor remoto: (401) No autorizado.
 PS C:\Users\Leandro Maciel\Documents\operandi>
