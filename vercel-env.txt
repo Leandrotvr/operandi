@@ -1,0 +1,5 @@
+﻿# COPIA ESTO EN VERCEL → Project Settings → Environment Variables (Production)
+DATABASE_URL=postgresql://postgres.jxgexrlhubrmxezdsuvq:ZYqhXfWwkAShca4i@aws-1-us-east-2.pooler.supabase.com:5432/postgres?sslmode=require
+NEXTAUTH_SECRET=J8vSj2CqBvXO2wVfSgViJOsMGgRyzxweOn6NPjrtQsk=
+NEXTAUTH_URL=https://TU-PROYECTO.vercel.app
+RESEND_API_KEY=
