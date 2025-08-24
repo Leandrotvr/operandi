@@ -1,106 +1,31 @@
-PS C:\Users\Leandro Maciel> # 0) Ir siempre al proyecto
+PS C:\Users\Leandro Maciel> # Ir al proyecto
 PS C:\Users\Leandro Maciel> cd "C:\Users\Leandro Maciel\Documents\operandi"
 PS C:\Users\Leandro Maciel\Documents\operandi>
-PS C:\Users\Leandro Maciel\Documents\operandi> # 1) Parámetros Supabase
-PS C:\Users\Leandro Maciel\Documents\operandi> $PROJECT_REF = 'jxgexrlhubrmxezdsuvq'
-PS C:\Users\Leandro Maciel\Documents\operandi> $DB_USER     = "postgres.$PROJECT_REF"
-PS C:\Users\Leandro Maciel\Documents\operandi> $DB_PASS     = 'WqAPcDLUW6rUZN6k'
-PS C:\Users\Leandro Maciel\Documents\operandi> $HOST_BASE   = 'aws-1-us-east-2.pooler.supabase.com'
+PS C:\Users\Leandro Maciel\Documents\operandi> # Variables de entorno en Vercel (Producción)
+PS C:\Users\Leandro Maciel\Documents\operandi> Write-Output "postgresql://postgres:wdFZUdKFrkgss7rq@db.jxgexrlhubrmxezdsuvq.supabase.co:5432/postgres" | vercel env add DATABASE_URL production
+Vercel CLI 46.0.2
+Error: A variable with the name `DATABASE_URL` already exists for the target production on branch undefined
+PS C:\Users\Leandro Maciel\Documents\operandi> Write-Output "https://operandi.vercel.app" | vercel env add NEXTAUTH_URL production
+Vercel CLI 46.0.2
+Error: A variable with the name `NEXTAUTH_URL` already exists for the target production on branch undefined
+PS C:\Users\Leandro Maciel\Documents\operandi> Write-Output "WqAPcDLUW6rUZN6k" | vercel env add NEXTAUTH_SECRET production
+Vercel CLI 46.0.2
+Error: A variable with the name `NEXTAUTH_SECRET` already exists for the target production on branch undefined
 PS C:\Users\Leandro Maciel\Documents\operandi>
-PS C:\Users\Leandro Maciel\Documents\operandi> # 2) URLs con ${} para que PowerShell no confunda los :
-PS C:\Users\Leandro Maciel\Documents\operandi> $SESSION_URL = "postgresql://${DB_USER}:${DB_PASS}@${HOST_BASE}:5432/postgres?sslmode=require"
-PS C:\Users\Leandro Maciel\Documents\operandi> $TX_URL      = "postgresql://${DB_USER}:${DB_PASS}@${HOST_BASE}:6543/postgres?sslmode=require&pgbouncer=true&connection_limit=1"
+PS C:\Users\Leandro Maciel\Documents\operandi> # Datos públicos
+PS C:\Users\Leandro Maciel\Documents\operandi> Write-Output "Leandro Maciel" | vercel env add NEXT_PUBLIC_NAME production
+Vercel CLI 46.0.2
+Error: A variable with the name `NEXT_PUBLIC_NAME` already exists for the target production on branch undefined
+PS C:\Users\Leandro Maciel\Documents\operandi> Write-Output "leandrotvr@gmail.com" | vercel env add NEXT_PUBLIC_EMAIL production
+Vercel CLI 46.0.2
+Error: A variable with the name `NEXT_PUBLIC_EMAIL` already exists for the target production on branch undefined
+PS C:\Users\Leandro Maciel\Documents\operandi> Write-Output "+543777416857" | vercel env add NEXT_PUBLIC_PHONE production
+Vercel CLI 46.0.2
+Error: A variable with the name `NEXT_PUBLIC_PHONE` already exists for the target production on branch undefined
+PS C:\Users\Leandro Maciel\Documents\operandi> Write-Output "https://www.linkedin.com/in/leandromaciel581/" | vercel env add NEXT_PUBLIC_LINKEDIN production
+Vercel CLI 46.0.2
+Error: A variable with the name `NEXT_PUBLIC_LINKEDIN` already exists for the target production on branch undefined
+PS C:\Users\Leandro Maciel\Documents\operandi> Write-Output "https://github.com/Leandrotvr/" | vercel env add NEXT_PUBLIC_GITHUB production
+Vercel CLI 46.0.2
+Error: A variable with the name `NEXT_PUBLIC_GITHUB` already exists for the target production on branch undefined
 PS C:\Users\Leandro Maciel\Documents\operandi>
-PS C:\Users\Leandro Maciel\Documents\operandi> # 3) Guardar en .env y .env.local con encoding UTF-8 sin BOM
-PS C:\Users\Leandro Maciel\Documents\operandi> $utf8NoBom = New-Object System.Text.UTF8Encoding($false)
-PS C:\Users\Leandro Maciel\Documents\operandi> [IO.File]::WriteAllText(".\.env",       "DATABASE_URL=$SESSION_URL`n", $utf8NoBom)
-PS C:\Users\Leandro Maciel\Documents\operandi> [IO.File]::WriteAllText(".\.env.local", "DATABASE_URL=$SESSION_URL`n", $utf8NoBom)
-PS C:\Users\Leandro Maciel\Documents\operandi>
-PS C:\Users\Leandro Maciel\Documents\operandi> Write-Host "`n✅ .env actualizado con la URL de Supabase" -ForegroundColor Green
-
-✅ .env actualizado con la URL de Supabase
-PS C:\Users\Leandro Maciel\Documents\operandi> npx prisma generate
-Environment variables loaded from .env
-Prisma schema loaded from prisma\schema.prisma
-
-✔ Generated Prisma Client (v6.14.0) to .\node_modules\@prisma\client in 615ms
-
-Start by importing your Prisma Client (See: https://pris.ly/d/importing-client)
-
-Tip: Interested in query caching in just a few lines of code? Try Accelerate today! https://pris.ly/tip-3-accelerate
-
-PS C:\Users\Leandro Maciel\Documents\operandi> npx prisma migrate deploy
-Environment variables loaded from .env                                                                                                              Prisma schema loaded from prisma\schema.prisma                                                                                                      Datasource "db": PostgreSQL database "postgres", schema "public" at "db.jxgexrlhubrmxezdsuvq.supabase.co:5432"                                                                                                                                                                                          Error: P1001: Can't reach database server at `db.jxgexrlhubrmxezdsuvq.supabase.co:5432`                                                                                                                                                                                                                 Please make sure your database server is running at `db.jxgexrlhubrmxezdsuvq.supabase.co:5432`.                                                     PS C:\Users\Leandro Maciel\Documents\operandi> # 0) Ir SIEMPRE al proyecto                                                                          PS C:\Users\Leandro Maciel\Documents\operandi> cd "C:\Users\Leandro Maciel\Documents\operandi"                                                      PS C:\Users\Leandro Maciel\Documents\operandi>                                                                                                      PS C:\Users\Leandro Maciel\Documents\operandi> # 1) Datos Supabase (TU proyecto)                                                                    PS C:\Users\Leandro Maciel\Documents\operandi> $PROJECT_REF = 'jxgexrlhubrmxezdsuvq'                                                                PS C:\Users\Leandro Maciel\Documents\operandi> $DB_PASS     = 'wdFZUdKFrkgss7rq'                                                                    PS C:\Users\Leandro Maciel\Documents\operandi> $DB_USER_SP  = "postgres.$PROJECT_REF"                  # usuario para poolers                       PS C:\Users\Leandro Maciel\Documents\operandi> $HOST_POOL   = 'aws-1-us-east-2.pooler.supabase.com'                                                 PS C:\Users\Leandro Maciel\Documents\operandi> $HOST_DB     = "db.$PROJECT_REF.supabase.co"                                                         PS C:\Users\Leandro Maciel\Documents\operandi>                                                                                                      PS C:\Users\Leandro Maciel\Documents\operandi> # 2) Cadenas de conexión correctas
-PS C:\Users\Leandro Maciel\Documents\operandi> $SESSION_URL = "postgresql://${DB_USER_SP}:${DB_PASS}@${HOST_POOL}:5432/postgres?sslmode=require"
-PS C:\Users\Leandro Maciel\Documents\operandi> $TX_URL      = "postgresql://${DB_USER_SP}:${DB_PASS}@${HOST_POOL}:6543/postgres?sslmode=require&pgbouncer=true&connection_limit=1"
-PS C:\Users\Leandro Maciel\Documents\operandi> $DIRECT_URL  = "postgresql://postgres:${DB_PASS}@${HOST_DB}:5432/postgres?sslmode=require"   # referencia (no se usa en Prisma aquí)
-PS C:\Users\Leandro Maciel\Documents\operandi>
-PS C:\Users\Leandro Maciel\Documents\operandi> # 3) Usar Session Pooler para tareas Prisma (.env/.env.local, UTF-8 sin BOM)
-PS C:\Users\Leandro Maciel\Documents\operandi> $u8 = New-Object System.Text.UTF8Encoding($false)
-PS C:\Users\Leandro Maciel\Documents\operandi> [IO.File]::WriteAllText(".\.env",       "DATABASE_URL=$SESSION_URL`n", $u8)
-PS C:\Users\Leandro Maciel\Documents\operandi> [IO.File]::WriteAllText(".\.env.local", "DATABASE_URL=$SESSION_URL`n", $u8)
-PS C:\Users\Leandro Maciel\Documents\operandi>
-PS C:\Users\Leandro Maciel\Documents\operandi> # 4) Probar reachability 5432 y ejecutar Prisma
-PS C:\Users\Leandro Maciel\Documents\operandi> $h = ([uri]$SESSION_URL).Host; $p = ([uri]$SESSION_URL).Port
-PS C:\Users\Leandro Maciel\Documents\operandi> Test-NetConnection $h -Port $p | Out-Host
-
-
-ComputerName     : aws-1-us-east-2.pooler.supabase.com
-RemoteAddress    : 3.131.201.192
-RemotePort       : 5432
-InterfaceAlias   : Wi-Fi
-SourceAddress    : 10.49.149.152
-TcpTestSucceeded : True
-
-
-
-PS C:\Users\Leandro Maciel\Documents\operandi> npx prisma db pull
-Environment variables loaded from .env
-Prisma schema loaded from prisma\schema.prisma
-Datasource "db": PostgreSQL database "postgres", schema "public" at "db.jxgexrlhubrmxezdsuvq.supabase.co:5432"
-
-✖ Introspecting based on datasource defined in prisma\schema.prisma
-
-Error: P1001
-
-Can't reach database server at `db.jxgexrlhubrmxezdsuvq.supabase.co:5432`
-
-Please make sure your database server is running at `db.jxgexrlhubrmxezdsuvq.supabase.co:5432`.
-
-PS C:\Users\Leandro Maciel\Documents\operandi> npx prisma migrate deploy
-Environment variables loaded from .env
-Prisma schema loaded from prisma\schema.prisma
-Datasource "db": PostgreSQL database "postgres", schema "public" at "db.jxgexrlhubrmxezdsuvq.supabase.co:5432"
-
-Error: P1001: Can't reach database server at `db.jxgexrlhubrmxezdsuvq.supabase.co:5432`
-
-Please make sure your database server is running at `db.jxgexrlhubrmxezdsuvq.supabase.co:5432`.
-PS C:\Users\Leandro Maciel\Documents\operandi> npx prisma generate
-Environment variables loaded from .env
-Prisma schema loaded from prisma\schema.prisma
-
-✔ Generated Prisma Client (v6.14.0) to .\node_modules\@prisma\client in 340ms
-
-Start by importing your Prisma Client (See: https://pris.ly/d/importing-client)
-
-Tip: Interested in query caching in just a few lines of code? Try Accelerate today! https://pris.ly/tip-3-accelerate
-
-PS C:\Users\Leandro Maciel\Documents\operandi>
-PS C:\Users\Leandro Maciel\Documents\operandi> # 5) Dejar runtime en Transaction Pooler (mejor para producción serverless)
-PS C:\Users\Leandro Maciel\Documents\operandi> [IO.File]::WriteAllText(".\.env",       "DATABASE_URL=$TX_URL`n", $u8)
-PS C:\Users\Leandro Maciel\Documents\operandi> [IO.File]::WriteAllText(".\.env.local", "DATABASE_URL=$TX_URL`n", $u8)
-PS C:\Users\Leandro Maciel\Documents\operandi>
-PS C:\Users\Leandro Maciel\Documents\operandi> # 6) Variables de NextAuth locales (idempotente)
-PS C:\Users\Leandro Maciel\Documents\operandi> $NEXTAUTH_URL_LOCAL = "http://localhost:3001"
-PS C:\Users\Leandro Maciel\Documents\operandi> $NEXTAUTH_SECRET    = [Convert]::ToBase64String((1..32 | % {Get-Random -Minimum 0 -Maximum 256}))
-PS C:\Users\Leandro Maciel\Documents\operandi> Add-Content .\.env        "NEXTAUTH_URL=$NEXTAUTH_URL_LOCAL`nNEXTAUTH_SECRET=$NEXTAUTH_SECRET"
-PS C:\Users\Leandro Maciel\Documents\operandi> Add-Content .\.env.local  "NEXTAUTH_URL=$NEXTAUTH_URL_LOCAL`nNEXTAUTH_SECRET=$NEXTAUTH_SECRET"
-PS C:\Users\Leandro Maciel\Documents\operandi>
-PS C:\Users\Leandro Maciel\Documents\operandi> # 7) Commit & push para redeploy automático (usa rama actual; si no, master)
-PS C:\Users\Leandro Maciel\Documents\operandi> git add -A
-PS C:\Users\Leandro Maciel\Documents\operandi> git commit -m "chore(db): configurar Supabase (session/tx pooler) y Prisma" 2>$null
-[master fed5f58] chore(db): configurar Supabase (session/tx pooler) y Prisma
- 1 file changed, 7 insertions(+), 151 deletions(-)
-PS C:\Users\Leandro Maciel\Documents\operandi> $branch = (& git rev-parse --abbrev-ref HEAD 2>$null).Trim(); if (-not $branch) { $branch = "master"; git checkout -b $branch }
-PS C:\Users\Leandro Maciel\Documents\operandi> git push -u origin $branch
-Enumerating objects: 5, done.
