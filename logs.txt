@@ -1,0 +1,58 @@
+Error: Command "npm run build" exited with 1
+
+2025-08-24T19:58:53.340Z  Running build in Washington, D.C., USA (East) – iad1
+2025-08-24T19:58:53.340Z  Build machine configuration: 2 cores, 8 GB
+2025-08-24T19:58:53.375Z  Retrieving list of deployment files...
+2025-08-24T19:58:53.470Z  Previous build caches not available
+2025-08-24T19:58:53.872Z  Downloading 70 deployment files...
+2025-08-24T19:58:54.555Z  Running "vercel build"
+2025-08-24T19:58:54.967Z  Vercel CLI 46.0.2
+2025-08-24T19:58:55.360Z  Installing dependencies...
+2025-08-24T19:59:19.497Z
+2025-08-24T19:59:19.498Z  added 561 packages in 24s
+2025-08-24T19:59:19.498Z
+2025-08-24T19:59:19.499Z  180 packages are looking for funding
+2025-08-24T19:59:19.499Z    run `npm fund` for details
+2025-08-24T19:59:19.595Z  Detected Next.js version: 15.5.0
+2025-08-24T19:59:19.602Z  Running "npm run build"
+2025-08-24T19:59:19.718Z
+2025-08-24T19:59:19.719Z  > operandi@0.1.0 build
+2025-08-24T19:59:19.719Z  > next build --turbopack
+2025-08-24T19:59:19.719Z
+2025-08-24T19:59:20.360Z  Attention: Next.js now collects completely anonymous telemetry regarding usage.
+2025-08-24T19:59:20.361Z  This information is used to shape Next.js' roadmap and prioritize features.
+2025-08-24T19:59:20.362Z  You can learn more, including how to opt-out if you'd not like to participate in this anonymous program, by visiting the following URL:
+2025-08-24T19:59:20.362Z  https://nextjs.org/telemetry
+2025-08-24T19:59:20.362Z
+2025-08-24T19:59:20.423Z     ▲ Next.js 15.5.0 (Turbopack)
+2025-08-24T19:59:20.424Z     - Environments: .env
+2025-08-24T19:59:20.425Z
+2025-08-24T19:59:20.508Z     Creating an optimized production build ...
+2025-08-24T19:59:21.191Z   ⚠ Found lockfile missing swc dependencies, run next locally to automatically patch
+2025-08-24T19:59:32.099Z   ✓ Finished writing to disk in 14ms
+2025-08-24T19:59:32.127Z   ✓ Compiled successfully in 11.1s
+2025-08-24T19:59:32.140Z     Skipping linting
+2025-08-24T19:59:32.141Z     Checking validity of types ...
+2025-08-24T19:59:37.975Z  Failed to compile.
+2025-08-24T19:59:37.976Z
+2025-08-24T19:59:37.976Z  ./app/api/cv/route.ts:10:23
+2025-08-24T19:59:37.976Z  Type error: Argument of type 'Buffer<ArrayBufferLike>' is not assignable to parameter of type 'BodyInit | null | undefined'.
+2025-08-24T19:59:37.976Z    Type 'Buffer<ArrayBufferLike>' is missing the following properties from type 'URLSearchParams': size, append, delete, get, and 2 more.
+2025-08-24T19:59:37.976Z
+2025-08-24T19:59:37.977Z     8 |   const html = await fs.readFile(filePath);
+2025-08-24T19:59:37.977Z     9 |
+2025-08-24T19:59:37.977Z  > 10 |   return new Response(html, {
+2025-08-24T19:59:37.977Z       |                       ^
+2025-08-24T19:59:37.978Z    11 |     headers: {
+2025-08-24T19:59:37.978Z    12 |       "Content-Type": "text/html; charset=utf-8",
+2025-08-24T19:59:37.978Z    13 |       "Content-Disposition": 'attachment; filename="CV_Leandro_Maciel.html"',
+2025-08-24T19:59:38.002Z  Next.js build worker exited with code: 1 and signal: null
+2025-08-24T19:59:38.023Z  Error: Command "npm run build" exited with 1
+PS C:\Users\Leandro Maciel\Documents\operandi>
+PS C:\Users\Leandro Maciel\Documents\operandi> Write-Host ""
+
+PS C:\Users\Leandro Maciel\Documents\operandi> Write-Host "✅ Listo. Cuando termine el build, abrí: $VERCEL_URL" -ForegroundColor Green
+✅ Listo. Cuando termine el build, abrí: https://operandi.vercel.app
+PS C:\Users\Leandro Maciel\Documents\operandi> Write-Host "   Si ves errores de build, pásame el log de Vercel y lo ajustamos."
+   Si ves errores de build, pásame el log de Vercel y lo ajustamos.
+PS C:\Users\Leandro Maciel\Documents\operandi>
