@@ -16,7 +16,7 @@ export default function HireCard(){
 
   return (
     <section className="rounded-lg border border-white/10 bg-white/5 p-6 shadow-lg">
-      <h2 className="text-xl font-bold mb-2">Contrátame</h2>
+      <h2 className="text-xl font-bold mb-2">Contrátame — Leandro Maciel</h2>
       <p className="text-sm text-white/70">
         Desarrollador <strong>front-end</strong> con <strong>Next.js</strong>,
         <strong> TypeScript</strong> y <strong>Tailwind</strong>; integración
@@ -83,3 +83,4 @@ export default function HireCard(){
     </section>
   );
 }
+
