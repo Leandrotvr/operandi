@@ -1,3 +1,152 @@
+Windows PowerShell
+Copyright (C) Microsoft Corporation. Todos los derechos reservados.
+
+Instale la versión más reciente de PowerShell para obtener nuevas características y mejoras. https://aka.ms/PSWindows
+
+PS C:\Users\Leandro Maciel> # Ir al proyecto
+PS C:\Users\Leandro Maciel> cd "C:\Users\Leandro Maciel\Documents\operandi"
+PS C:\Users\Leandro Maciel\Documents\operandi>
+PS C:\Users\Leandro Maciel\Documents\operandi> # Variables de entorno en Vercel (Producción)
+PS C:\Users\Leandro Maciel\Documents\operandi> Write-Output "postgresql://postgres:wdFZUdKFrkgss7rq@db.jxgexrlhubrmxezdsuvq.supabase.co:5432/postgres" | vercel env add DATABASE_URL production
+Vercel CLI 46.0.2
+Error: A variable with the name `DATABASE_URL` already exists for the target production on branch undefined
+PS C:\Users\Leandro Maciel\Documents\operandi> Write-Output "https://operandi.vercel.app" | vercel env add NEXTAUTH_URL production
+Vercel CLI 46.0.2
+Error: A variable with the name `NEXTAUTH_URL` already exists for the target production on branch undefined
+PS C:\Users\Leandro Maciel\Documents\operandi> Write-Output "WqAPcDLUW6rUZN6k" | vercel env add NEXTAUTH_SECRET production
+Vercel CLI 46.0.2
+Error: A variable with the name `NEXTAUTH_SECRET` already exists for the target production on branch undefined
+PS C:\Users\Leandro Maciel\Documents\operandi>
+PS C:\Users\Leandro Maciel\Documents\operandi> # Datos públicos
+PS C:\Users\Leandro Maciel\Documents\operandi> Write-Output "Leandro Maciel" | vercel env add NEXT_PUBLIC_NAME production
+Vercel CLI 46.0.2
+Error: A variable with the name `NEXT_PUBLIC_NAME` already exists for the target production on branch undefined
+PS C:\Users\Leandro Maciel\Documents\operandi> Write-Output "leandrotvr@gmail.com" | vercel env add NEXT_PUBLIC_EMAIL production
+Vercel CLI 46.0.2
+Error: A variable with the name `NEXT_PUBLIC_EMAIL` already exists for the target production on branch undefined
+PS C:\Users\Leandro Maciel\Documents\operandi> Write-Output "+543777416857" | vercel env add NEXT_PUBLIC_PHONE production
+Vercel CLI 46.0.2
+Error: A variable with the name `NEXT_PUBLIC_PHONE` already exists for the target production on branch undefined
+PS C:\Users\Leandro Maciel\Documents\operandi> Write-Output "https://www.linkedin.com/in/leandromaciel581/" | vercel env add NEXT_PUBLIC_LINKEDIN production
+Vercel CLI 46.0.2
+Error: A variable with the name `NEXT_PUBLIC_LINKEDIN` already exists for the target production on branch undefined
+PS C:\Users\Leandro Maciel\Documents\operandi> Write-Output "https://github.com/Leandrotvr/" | vercel env add NEXT_PUBLIC_GITHUB production
+Vercel CLI 46.0.2
+Error: A variable with the name `NEXT_PUBLIC_GITHUB` already exists for the target production on branch undefined
+PS C:\Users\Leandro Maciel\Documents\operandi> git add -A
+PS C:\Users\Leandro Maciel\Documents\operandi> git commit -m "fix: probar despliegue"
+[master fb6d3c2] fix: probar despliegue
+ 1 file changed, 28 insertions(+), 103 deletions(-)
+PS C:\Users\Leandro Maciel\Documents\operandi> git push origin main
+error: src refspec main does not match any
+error: failed to push some refs to 'https://github.com/Leandrotvr/operandi.git'
+PS C:\Users\Leandro Maciel\Documents\operandi> # 0) Ir SIEMPRE al proyecto
+PS C:\Users\Leandro Maciel\Documents\operandi> cd "C:\Users\Leandro Maciel\Documents\operandi"
+PS C:\Users\Leandro Maciel\Documents\operandi>
+PS C:\Users\Leandro Maciel\Documents\operandi> # 1) Verificar repo Git y rama actual (solo informativo)
+PS C:\Users\Leandro Maciel\Documents\operandi> git status
+On branch master
+Your branch is ahead of 'origin/master' by 1 commit.
+  (use "git push" to publish your local commits)
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        modified:   logs.txt
+
+no changes added to commit (use "git add" and/or "git commit -a")
+PS C:\Users\Leandro Maciel\Documents\operandi> git branch
+* master
+PS C:\Users\Leandro Maciel\Documents\operandi>
+PS C:\Users\Leandro Maciel\Documents\operandi> # 2) Renombrar 'master' -> 'main' (idempotente: funciona aunque ya se llame main)
+PS C:\Users\Leandro Maciel\Documents\operandi> git branch -M main
+PS C:\Users\Leandro Maciel\Documents\operandi>
+PS C:\Users\Leandro Maciel\Documents\operandi> # 3) Configurar remoto si falta (idempotente)
+PS C:\Users\Leandro Maciel\Documents\operandi> $remote = (git remote 2>$null)
+PS C:\Users\Leandro Maciel\Documents\operandi> if (-not $remote) { git remote add origin "https://github.com/Leandrotvr/operandi.git" }
+PS C:\Users\Leandro Maciel\Documents\operandi>
+PS C:\Users\Leandro Maciel\Documents\operandi> # 4) Push rama 'main' (establece upstream la primera vez)
+PS C:\Users\Leandro Maciel\Documents\operandi> git push -u origin main
+Enumerating objects: 5, done.
+Counting objects: 100% (5/5), done.
+Delta compression using up to 2 threads
+Compressing objects: 100% (3/3), done.
+Writing objects: 100% (3/3), 823 bytes | 274.00 KiB/s, done.
+Total 3 (delta 1), reused 0 (delta 0), pack-reused 0 (from 0)
+remote: Resolving deltas: 100% (1/1), completed with 1 local object.
+remote:
+remote: Create a pull request for 'main' on GitHub by visiting:
+remote:      https://github.com/Leandrotvr/operandi/pull/new/main
+remote:
+To https://github.com/Leandrotvr/operandi.git
+ * [new branch]      main -> main
+branch 'main' set up to track 'origin/main'.
+PS C:\Users\Leandro Maciel\Documents\operandi>
+PS C:\Users\Leandro Maciel\Documents\operandi> # 5) Vercel: login si hace falta + link proyecto + redeploy forzado
+PS C:\Users\Leandro Maciel\Documents\operandi> if (-not (Get-Command vercel -ErrorAction SilentlyContinue)) { npm i -g vercel | Out-Null }
+PS C:\Users\Leandro Maciel\Documents\operandi> vercel whoami 1>$null 2>$null; if ($LASTEXITCODE -ne 0) { vercel login }
+PS C:\Users\Leandro Maciel\Documents\operandi> vercel link --project operandi --yes
+Vercel CLI 46.0.2
+✅  Linked to leandrotvrs-projects/operandi (created .vercel)
+PS C:\Users\Leandro Maciel\Documents\operandi>
+PS C:\Users\Leandro Maciel\Documents\operandi> # Redeploy producción (ignora cache)
+PS C:\Users\Leandro Maciel\Documents\operandi> vercel deploy --prod --yes --force
+Vercel CLI 46.0.2
+🔍  Inspect: https://vercel.com/leandrotvrs-projects/operandi/8QTFBEKvFE3aB6DvB4DNfsVWfqtp [3s]
+✅  Production: https://operandi-bl9t6eekp-leandrotvrs-projects.vercel.app [3s]
+PS C:\Users\Leandro Maciel\Documents\operandi>
+PS C:\Users\Leandro Maciel\Documents\operandi> # 6) Mostrar deployments y abrir el último si está READY
+PS C:\Users\Leandro Maciel\Documents\operandi> Write-Host "`n=== Deployments recientes ===" -ForegroundColor Cyan
+
+=== Deployments recientes ===
+PS C:\Users\Leandro Maciel\Documents\operandi> vercel ls operandi | Out-Host
+Vercel CLI 46.0.2
+> Deployments for leandrotvrs-projects/operandi [414ms]
+
+  Age     Deployment                                                     Status      Environment     Duration     Username
+  2m      https://operandi-bl9t6eekp-leandrotvrs-projects.vercel.app     ● Ready     Production      1m           leandrotvr
+  2m      https://operandi-md79itp4q-leandrotvrs-projects.vercel.app     ● Ready     Preview         48s          leandrotvr
+  32m     https://operandi-fh5a503fq-leandrotvrs-projects.vercel.app     ● Ready     Production      46s          leandrotvr
+  33m     https://operandi-mcqf0xyn3-leandrotvrs-projects.vercel.app     ● Ready     Production      47s          leandrotvr
+  39m     https://operandi-509qgtm08-leandrotvrs-projects.vercel.app     ● Ready     Production      48s          leandrotvr
+  40m     https://operandi-1jha5x266-leandrotvrs-projects.vercel.app     ● Ready     Production      48s          leandrotvr
+  2h      https://operandi-hkl9ljjdz-leandrotvrs-projects.vercel.app     ● Ready     Production      48s          leandrotvr
+  2h      https://operandi-5muwofrn7-leandrotvrs-projects.vercel.app     ● Ready     Production      47s          leandrotvr
+  3h      https://operandi-k7uau763f-leandrotvrs-projects.vercel.app     ● Error     Production      23s          leandrotvr
+  3h      https://operandi-47k3tsbnp-leandrotvrs-projects.vercel.app     ● Error     Production      43s          leandrotvr
+  3h      https://operandi-ithhlig15-leandrotvrs-projects.vercel.app     ● Ready     Production      1m           leandrotvr
+  3h      https://operandi-9g6138viu-leandrotvrs-projects.vercel.app     ● Error     Production      1s           leandrotvr
+  3h      https://operandi-pb1np7udy-leandrotvrs-projects.vercel.app     ● Error     Production      2s           leandrotvr
+  3h      https://operandi-1s5tsrbia-leandrotvrs-projects.vercel.app     ● Error     Production      2s           leandrotvr
+  3h      https://operandi-n2rb1n062-leandrotvrs-projects.vercel.app     ● Error     Production      42s          leandrotvr
+  3h      https://operandi-m7j7zbh8f-leandrotvrs-projects.vercel.app     ● Error     Production      40s          leandrotvr
+  4h      https://operandi-aj3w6wkgj-leandrotvrs-projects.vercel.app     ● Error     Production      46s          leandrotvr
+  4h      https://operandi-3pd8hj5iv-leandrotvrs-projects.vercel.app     ● Error     Production      46s          leandrotvr
+  4h      https://operandi-o5f2wlp6p-leandrotvrs-projects.vercel.app     ● Error     Production      46s          leandrotvr
+  4h      https://operandi-juk2huguk-leandrotvrs-projects.vercel.app     ● Error     Production      43s          leandrotvr
+
+> To display the next page, run `vercel ls operandi --next 1756065007010`
+https://operandi-bl9t6eekp-leandrotvrs-projects.vercel.app
+https://operandi-md79itp4q-leandrotvrs-projects.vercel.app
+https://operandi-fh5a503fq-leandrotvrs-projects.vercel.app
+https://operandi-mcqf0xyn3-leandrotvrs-projects.vercel.app
+https://operandi-509qgtm08-leandrotvrs-projects.vercel.app
+https://operandi-1jha5x266-leandrotvrs-projects.vercel.app
+https://operandi-hkl9ljjdz-leandrotvrs-projects.vercel.app
+https://operandi-5muwofrn7-leandrotvrs-projects.vercel.app
+https://operandi-k7uau763f-leandrotvrs-projects.vercel.app
+https://operandi-47k3tsbnp-leandrotvrs-projects.vercel.app
+https://operandi-ithhlig15-leandrotvrs-projects.vercel.app
+https://operandi-9g6138viu-leandrotvrs-projects.vercel.app
+https://operandi-pb1np7udy-leandrotvrs-projects.vercel.app
+https://operandi-1s5tsrbia-leandrotvrs-projects.vercel.app
+https://operandi-n2rb1n062-leandrotvrs-projects.vercel.app
+https://operandi-m7j7zbh8f-leandrotvrs-projects.vercel.app
+https://operandi-aj3w6wkgj-leandrotvrs-projects.vercel.app
+https://operandi-3pd8hj5iv-leandrotvrs-projects.vercel.app
+https://operandi-o5f2wlp6p-leandrotvrs-projects.vercel.app
+https://operandi-juk2huguk-leandrotvrs-projects.vercel.app
+PS C:\Users\Leandro Maciel\Documents\operandi>
 PS C:\Users\Leandro Maciel\Documents\operandi> try {
 >>   $j = vercel ls operandi --json 2>$null
 >>   if ($j) {
@@ -28,4 +177,266 @@ PS C:\Users\Leandro Maciel\Documents\operandi> try {
 >> }
 ❌ Error al conectar con https://operandi-bl9t6eekp-leandrotvrs-projects.vercel.app
 Error en el servidor remoto: (401) No autorizado.
+PS C:\Users\Leandro Maciel\Documents\operandi> # 0) Ir SIEMPRE al proyecto
+PS C:\Users\Leandro Maciel\Documents\operandi> cd "C:\Users\Leandro Maciel\Documents\operandi"
+PS C:\Users\Leandro Maciel\Documents\operandi>
+PS C:\Users\Leandro Maciel\Documents\operandi> # 1) Eliminar middleware global si existiera (suele forzar auth en todas las rutas)
+PS C:\Users\Leandro Maciel\Documents\operandi> Remove-Item .\middleware.ts -Force -ErrorAction SilentlyContinue
+PS C:\Users\Leandro Maciel\Documents\operandi>
+PS C:\Users\Leandro Maciel\Documents\operandi> # 2) Reemplazar la home por una versión 100% pública (sin getServerSession / redirects)
+PS C:\Users\Leandro Maciel\Documents\operandi> $home = @'
+>> export const dynamic = "force-static";
+>>
+>> export default function Home() {
+>>   return (
+>>     <main className="mx-auto max-w-3xl p-8 space-y-6">
+>>       <h1 className="text-3xl font-bold tracking-tight">Leandro Maciel — Desarrollador Front-End</h1>
+>>       <p className="text-white/70">
+>>         Portafolio público. No requiere inicio de sesión. Next.js + Tailwind + Prisma + Supabase + NextAuth (demo).
+>>       </p>
+>>
+>>       <div className="flex flex-wrap gap-3">
+>>         <a href="/cv.html" className="underline">Ver CV (HTML)</a>
+>>         <a href="/login" className="underline">Login (demo, opcional)</a>
+>>         <a href="mailto:leandrotvr@gmail.com" className="underline">Email</a>
+>>         <a href="https://wa.me/543777416857" target="_blank" rel="noopener" className="underline">WhatsApp</a>
+>>         <a href="https://www.linkedin.com/in/leandromaciel581/" target="_blank" rel="noopener" className="underline">LinkedIn</a>
+>>         <a href="https://github.com/Leandrotvr/" target="_blank" rel="noopener" className="underline">GitHub</a>
+>>       </div>
+>>     </main>
+>>   );
+>> }
+>> '@
+No se puede sobrescribir la variable HOME porque es de solo lectura o constante.
+En línea: 1 Carácter: 1
++ $home = @'
++ ~~~~~~~~~~
+    + CategoryInfo          : WriteError: (HOME:String) [], SessionStateUnauthorizedAccessException
+    + FullyQualifiedErrorId : VariableNotWritable
+
+PS C:\Users\Leandro Maciel\Documents\operandi> Set-Content .\app\page.tsx $home -Encoding utf8
+PS C:\Users\Leandro Maciel\Documents\operandi>
+PS C:\Users\Leandro Maciel\Documents\operandi> # 3) (Opcional seguro) Asegurar que NO hay protección en layout
+PS C:\Users\Leandro Maciel\Documents\operandi> #    Si en algún momento envolviste <body> con un Provider que hace redirect por falta de sesión,
+PS C:\Users\Leandro Maciel\Documents\operandi> #    esto lo deja sin Provider (público). Comenta si ya tienes un layout correcto.
+PS C:\Users\Leandro Maciel\Documents\operandi> #    --- DESCOMENTA las 5 líneas de abajo SOLO si necesitás forzar layout público ---
+PS C:\Users\Leandro Maciel\Documents\operandi> # $layout = Get-Content .\app\layout.tsx -Raw
+PS C:\Users\Leandro Maciel\Documents\operandi> # $layout = $layout -replace 'import\s+Provider.*\n','' -replace '<Provider>','' -replace '</Provider>',''
+PS C:\Users\Leandro Maciel\Documents\operandi> # Set-Content .\app\layout.tsx $layout -Encoding utf8
+PS C:\Users\Leandro Maciel\Documents\operandi>
+PS C:\Users\Leandro Maciel\Documents\operandi> # 4) Commit & push (usa la rama actual; si no hay, crea main)
+PS C:\Users\Leandro Maciel\Documents\operandi> git add -A
+PS C:\Users\Leandro Maciel\Documents\operandi> git commit -m "feat: home pública (sin login) y remover middleware de auth" 2>$null
+[main 87c0165] feat: home pública (sin login) y remover middleware de auth
+ 2 files changed, 30 insertions(+), 38 deletions(-)
+PS C:\Users\Leandro Maciel\Documents\operandi> $branch = (& git rev-parse --abbrev-ref HEAD 2>$null).Trim(); if (-not $branch) { $branch = "main"; git checkout -b $branch }
+PS C:\Users\Leandro Maciel\Documents\operandi> $hasOrigin = (git remote 2>$null) -and ((git remote) -match '^origin$')
+PS C:\Users\Leandro Maciel\Documents\operandi> if (-not $hasOrigin) { git remote add origin "https://github.com/Leandrotvr/operandi.git" }
+PS C:\Users\Leandro Maciel\Documents\operandi> git push -u origin $branch
+Enumerating objects: 9, done.
+Counting objects: 100% (9/9), done.
+Delta compression using up to 2 threads
+Compressing objects: 100% (4/4), done.
+Writing objects: 100% (5/5), 1.12 KiB | 381.00 KiB/s, done.
+Total 5 (delta 2), reused 0 (delta 0), pack-reused 0 (from 0)
+remote: Resolving deltas: 100% (2/2), completed with 2 local objects.
+To https://github.com/Leandrotvr/operandi.git
+   fb6d3c2..87c0165  main -> main
+branch 'main' set up to track 'origin/main'.
+PS C:\Users\Leandro Maciel\Documents\operandi>
+PS C:\Users\Leandro Maciel\Documents\operandi> # 5) Vercel: login si hace falta, link proyecto, y redeploy forzado
+PS C:\Users\Leandro Maciel\Documents\operandi> if (-not (Get-Command vercel -ErrorAction SilentlyContinue)) { npm i -g vercel | Out-Null }
+PS C:\Users\Leandro Maciel\Documents\operandi> vercel whoami 1>$null 2>$null; if ($LASTEXITCODE -ne 0) { vercel login }
+PS C:\Users\Leandro Maciel\Documents\operandi> vercel link --project operandi --yes
+Vercel CLI 46.0.2
+✅  Linked to leandrotvrs-projects/operandi (created .vercel)
+PS C:\Users\Leandro Maciel\Documents\operandi> vercel deploy --prod --yes --force
+Vercel CLI 46.0.2
+🔍  Inspect: https://vercel.com/leandrotvrs-projects/operandi/2bhZqcpU8d4QMetEzzU6CXkp8aeX [3s]
+✅  Production: https://operandi-h2jzn5jll-leandrotvrs-projects.vercel.app [3s]
+Error: Command "npm run build" exited with 1
+
+2025-08-24T23:59:44.301Z  Running build in Washington, D.C., USA (East) – iad1
+2025-08-24T23:59:44.301Z  Build machine configuration: 2 cores, 8 GB
+2025-08-24T23:59:44.336Z  Retrieving list of deployment files...
+2025-08-24T23:59:44.343Z  Skipping build cache, deployment was triggered without cache.
+2025-08-24T23:59:44.839Z  Downloading 71 deployment files...
+2025-08-24T23:59:45.630Z  Running "vercel build"
+2025-08-24T23:59:46.013Z  Vercel CLI 46.0.2
+2025-08-24T23:59:46.338Z  Installing dependencies...
+2025-08-25T00:00:10.153Z
+2025-08-25T00:00:10.154Z  added 561 packages in 24s
+2025-08-25T00:00:10.155Z
+2025-08-25T00:00:10.155Z  180 packages are looking for funding
+2025-08-25T00:00:10.159Z    run `npm fund` for details
+2025-08-25T00:00:10.207Z  Detected Next.js version: 15.5.0
+2025-08-25T00:00:10.214Z  Running "npm run build"
+2025-08-25T00:00:10.331Z
+2025-08-25T00:00:10.332Z  > operandi@0.1.0 build
+2025-08-25T00:00:10.333Z  > prisma generate && next build --turbopack
+2025-08-25T00:00:10.333Z
+2025-08-25T00:00:11.862Z  Environment variables loaded from .env
+2025-08-25T00:00:11.864Z  Prisma schema loaded from prisma/schema.prisma
+2025-08-25T00:00:12.039Z
+2025-08-25T00:00:12.040Z  ✔ Generated Prisma Client (v6.14.0) to ./node_modules/@prisma/client in 46ms
+2025-08-25T00:00:12.040Z
+2025-08-25T00:00:12.040Z  Start by importing your Prisma Client (See: https://pris.ly/d/importing-client)
+2025-08-25T00:00:12.040Z
+2025-08-25T00:00:12.040Z  Tip: Want to turn off tips and other hints? https://pris.ly/tip-4-nohints
+2025-08-25T00:00:12.040Z
+2025-08-25T00:00:12.667Z  Attention: Next.js now collects completely anonymous telemetry regarding usage.
+2025-08-25T00:00:12.668Z  This information is used to shape Next.js' roadmap and prioritize features.
+2025-08-25T00:00:12.669Z  You can learn more, including how to opt-out if you'd not like to participate in this anonymous program, by visiting the following URL:
+2025-08-25T00:00:12.669Z  https://nextjs.org/telemetry
+2025-08-25T00:00:12.669Z
+2025-08-25T00:00:12.726Z     ▲ Next.js 15.5.0 (Turbopack)
+2025-08-25T00:00:12.727Z     - Environments: .env
+2025-08-25T00:00:12.728Z
+2025-08-25T00:00:12.821Z     Creating an optimized production build ...
+2025-08-25T00:00:13.517Z   ⚠ Found lockfile missing swc dependencies, run next locally to automatically patch
+2025-08-25T00:00:24.384Z   ✓ Finished writing to disk in 13ms
+2025-08-25T00:00:24.407Z
+2025-08-25T00:00:24.408Z  > Build error occurred
+2025-08-25T00:00:24.412Z  Error: Turbopack build failed with 2 errors:
+2025-08-25T00:00:24.413Z  ./app/page.tsx:1:3
+2025-08-25T00:00:24.413Z  Parsing ecmascript source code failed
+2025-08-25T00:00:24.413Z  > 1 | ﻿C:\Users\Leandro Maciel
+2025-08-25T00:00:24.413Z      |   ^
+2025-08-25T00:00:24.413Z    2 |
+2025-08-25T00:00:24.414Z
+2025-08-25T00:00:24.414Z  Expected unicode escape
+2025-08-25T00:00:24.414Z
+2025-08-25T00:00:24.414Z
+2025-08-25T00:00:24.414Z  ./app/page.tsx:1:3
+2025-08-25T00:00:24.414Z  Parsing ecmascript source code failed
+2025-08-25T00:00:24.415Z  > 1 | ﻿C:\Users\Leandro Maciel
+2025-08-25T00:00:24.415Z      |   ^
+2025-08-25T00:00:24.415Z    2 |
+2025-08-25T00:00:24.415Z
+2025-08-25T00:00:24.415Z  Expected unicode escape
+2025-08-25T00:00:24.415Z
+2025-08-25T00:00:24.416Z
+2025-08-25T00:00:24.416Z      at <unknown> (./app/page.tsx:1:3)
+2025-08-25T00:00:24.416Z      at <unknown> (./app/page.tsx:1:3)
+2025-08-25T00:00:24.451Z  Error: Command "npm run build" exited with 1
+PS C:\Users\Leandro Maciel\Documents\operandi>
+PS C:\Users\Leandro Maciel\Documents\operandi> # 6) Mostrar estado y probar que devuelve 200 en producción
+PS C:\Users\Leandro Maciel\Documents\operandi> Write-Host "`n=== Deployments recientes ===" -ForegroundColor Cyan
+
+=== Deployments recientes ===
+PS C:\Users\Leandro Maciel\Documents\operandi> vercel ls operandi | Out-Host
+Vercel CLI 46.0.2
+> Deployments for leandrotvrs-projects/operandi [415ms]
+
+  Age     Deployment                                                     Status      Environment     Duration     Username
+  1m      https://operandi-h2jzn5jll-leandrotvrs-projects.vercel.app     ● Error     Production      41s          leandrotvr
+  1m      https://operandi-dzg2k4wne-leandrotvrs-projects.vercel.app     ● Error     Preview         20s          leandrotvr
+  17m     https://operandi-bl9t6eekp-leandrotvrs-projects.vercel.app     ● Ready     Production      1m           leandrotvr
+  17m     https://operandi-md79itp4q-leandrotvrs-projects.vercel.app     ● Ready     Preview         48s          leandrotvr
+  47m     https://operandi-fh5a503fq-leandrotvrs-projects.vercel.app     ● Ready     Production      46s          leandrotvr
+  47m     https://operandi-mcqf0xyn3-leandrotvrs-projects.vercel.app     ● Ready     Production      47s          leandrotvr
+  54m     https://operandi-509qgtm08-leandrotvrs-projects.vercel.app     ● Ready     Production      48s          leandrotvr
+  55m     https://operandi-1jha5x266-leandrotvrs-projects.vercel.app     ● Ready     Production      48s          leandrotvr
+  3h      https://operandi-hkl9ljjdz-leandrotvrs-projects.vercel.app     ● Ready     Production      48s          leandrotvr
+  3h      https://operandi-5muwofrn7-leandrotvrs-projects.vercel.app     ● Ready     Production      47s          leandrotvr
+  3h      https://operandi-k7uau763f-leandrotvrs-projects.vercel.app     ● Error     Production      23s          leandrotvr
+  3h      https://operandi-47k3tsbnp-leandrotvrs-projects.vercel.app     ● Error     Production      43s          leandrotvr
+  3h      https://operandi-ithhlig15-leandrotvrs-projects.vercel.app     ● Ready     Production      1m           leandrotvr
+  3h      https://operandi-9g6138viu-leandrotvrs-projects.vercel.app     ● Error     Production      1s           leandrotvr
+  3h      https://operandi-pb1np7udy-leandrotvrs-projects.vercel.app     ● Error     Production      2s           leandrotvr
+  4h      https://operandi-1s5tsrbia-leandrotvrs-projects.vercel.app     ● Error     Production      2s           leandrotvr
+  4h      https://operandi-n2rb1n062-leandrotvrs-projects.vercel.app     ● Error     Production      42s          leandrotvr
+  4h      https://operandi-m7j7zbh8f-leandrotvrs-projects.vercel.app     ● Error     Production      40s          leandrotvr
+  4h      https://operandi-aj3w6wkgj-leandrotvrs-projects.vercel.app     ● Error     Production      46s          leandrotvr
+  4h      https://operandi-3pd8hj5iv-leandrotvrs-projects.vercel.app     ● Error     Production      46s          leandrotvr
+
+https://operandi-h2jzn5jll-leandrotvrs-projects.vercel.app
+> To display the next page, run `vercel ls operandi --next 1756065756649`
+https://operandi-dzg2k4wne-leandrotvrs-projects.vercel.app
+https://operandi-bl9t6eekp-leandrotvrs-projects.vercel.app
+https://operandi-md79itp4q-leandrotvrs-projects.vercel.app
+https://operandi-fh5a503fq-leandrotvrs-projects.vercel.app
+https://operandi-mcqf0xyn3-leandrotvrs-projects.vercel.app
+https://operandi-509qgtm08-leandrotvrs-projects.vercel.app
+https://operandi-1jha5x266-leandrotvrs-projects.vercel.app
+https://operandi-hkl9ljjdz-leandrotvrs-projects.vercel.app
+https://operandi-5muwofrn7-leandrotvrs-projects.vercel.app
+https://operandi-k7uau763f-leandrotvrs-projects.vercel.app
+https://operandi-47k3tsbnp-leandrotvrs-projects.vercel.app
+https://operandi-ithhlig15-leandrotvrs-projects.vercel.app
+https://operandi-9g6138viu-leandrotvrs-projects.vercel.app
+https://operandi-pb1np7udy-leandrotvrs-projects.vercel.app
+https://operandi-1s5tsrbia-leandrotvrs-projects.vercel.app
+https://operandi-n2rb1n062-leandrotvrs-projects.vercel.app
+https://operandi-m7j7zbh8f-leandrotvrs-projects.vercel.app
+https://operandi-aj3w6wkgj-leandrotvrs-projects.vercel.app
+https://operandi-3pd8hj5iv-leandrotvrs-projects.vercel.app
+PS C:\Users\Leandro Maciel\Documents\operandi>
+PS C:\Users\Leandro Maciel\Documents\operandi> try {
+>>   $j = vercel ls operandi --json 2>$null
+>>   if ($j) {
+>>     $latest = $j | ConvertFrom-Json | Select-Object -First 1
+>>     $url = "https://$($latest.url)"
+>>     Write-Host "`nÚltimo deployment: $url  (estado: $($latest.state))" -ForegroundColor Cyan
+>>
+>>     try {
+>>       $resp = Invoke-WebRequest -Uri $url -UseBasicParsing
+>>       Write-Host "HTTP: $($resp.StatusCode)" -ForegroundColor Green
+>>       Write-Host "Vista previa HTML:" -ForegroundColor Yellow
+>>       $resp.Content.Substring(0, [Math]::Min(300, $resp.Content.Length))
+>>     } catch { Write-Host "No pude hacer GET a $url" -ForegroundColor Red; Write-Host $_.Exception.Message -ForegroundColor Red }
+>>
+>>     if ($latest.state -ne "READY") { vercel inspect $url --logs }
+>>   }
+>> } catch {}
+PS C:\Users\Leandro Maciel\Documents\operandi> # 0) Ir al proyecto
+PS C:\Users\Leandro Maciel\Documents\operandi> cd "C:\Users\Leandro Maciel\Documents\operandi"
+PS C:\Users\Leandro Maciel\Documents\operandi>
+PS C:\Users\Leandro Maciel\Documents\operandi> # 1) Reescribir app/page.tsx limpio
+PS C:\Users\Leandro Maciel\Documents\operandi> @'
+>> export const dynamic = "force-static";
+>>
+>> export default function Home() {
+>>   return (
+>>     <main className="mx-auto max-w-3xl p-8 space-y-6">
+>>       <h1 className="text-3xl font-bold tracking-tight">Leandro Maciel — Desarrollador Front-End</h1>
+>>       <p className="text-white/70">
+>>         Portafolio público. No requiere inicio de sesión. Next.js + Tailwind + Prisma + Supabase + NextAuth (demo).
+>>       </p>
+>>
+>>       <div className="flex flex-wrap gap-3">
+>>         <a href="/cv.html" className="underline">Ver CV (HTML)</a>
+>>         <a href="/login" className="underline">Login (demo, opcional)</a>
+>>         <a href="mailto:leandrotvr@gmail.com" className="underline">Email</a>
+>>         <a href="https://wa.me/543777416857" target="_blank" rel="noopener" className="underline">WhatsApp</a>
+>>         <a href="https://www.linkedin.com/in/leandromaciel581/" target="_blank" rel="noopener" className="underline">LinkedIn</a>
+>>         <a href="https://github.com/Leandrotvr/" target="_blank" rel="noopener" className="underline">GitHub</a>
+>>       </div>
+>>     </main>
+>>   );
+>> }
+>> '@ | Set-Content .\app\page.tsx -Encoding utf8
+PS C:\Users\Leandro Maciel\Documents\operandi>
+PS C:\Users\Leandro Maciel\Documents\operandi> # 2) Commit y push
+PS C:\Users\Leandro Maciel\Documents\operandi> git add app/page.tsx
+warning: in the working copy of 'app/page.tsx', LF will be replaced by CRLF the next time Git touches it
+PS C:\Users\Leandro Maciel\Documents\operandi> git commit -m "fix: limpiar page.tsx (se había colado ruta de Windows)"
+[main 3b85529] fix: limpiar page.tsx (se había colado ruta de Windows)
+ 1 file changed, 21 insertions(+), 1 deletion(-)
+PS C:\Users\Leandro Maciel\Documents\operandi> git push origin main
+Enumerating objects: 7, done.
+Counting objects: 100% (7/7), done.
+Delta compression using up to 2 threads
+Compressing objects: 100% (4/4), done.
+Writing objects: 100% (4/4), 900 bytes | 225.00 KiB/s, done.
+Total 4 (delta 2), reused 0 (delta 0), pack-reused 0 (from 0)
+remote: Resolving deltas: 100% (2/2), completed with 2 local objects.
+To https://github.com/Leandrotvr/operandi.git
+   87c0165..3b85529  main -> main
+PS C:\Users\Leandro Maciel\Documents\operandi>
+PS C:\Users\Leandro Maciel\Documents\operandi> # 3) Forzar nuevo deploy en Vercel
+PS C:\Users\Leandro Maciel\Documents\operandi> vercel deploy --prod --yes --force
+Vercel CLI 46.0.2
+🔍  Inspect: https://vercel.com/leandrotvrs-projects/operandi/5UaChmxtT7bCAe7fze134XStiNGS [4s]
+✅  Production: https://operandi-g4u36z39n-leandrotvrs-projects.vercel.app [4s]
 PS C:\Users\Leandro Maciel\Documents\operandi>

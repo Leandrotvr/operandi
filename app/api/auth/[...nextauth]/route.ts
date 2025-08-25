@@ -9,19 +9,27 @@ const prisma = new PrismaClient();
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma) as Adapter,
   session: { strategy: "jwt" },
+  debug: process.env.NODE_ENV === "development",
   providers: [
     Credentials({
       name: "Demo",
       credentials: { email: { label: "Email", type: "text" } },
       async authorize(creds) {
-        const email = (creds?.email || "").toString().toLowerCase();
-        if (!email.includes("@")) return null;
-        const user = await prisma.user.upsert({
-          where: { email },
-          create: { email, name: email.split("@")[0] },
-          update: {}
-        });
-        return { id: user.id, name: user.name ?? "", email: user.email };
+        try {
+          const email = (creds?.email || "").toString().toLowerCase().trim();
+          if (!email.includes("@")) return null;
+
+          const user = await prisma.user.upsert({
+            where: { email },
+            create: { email, name: email.split("@")[0] },
+            update: {}
+          });
+
+          return { id: user.id, name: user.name ?? "", email: user.email };
+        } catch (e:any) {
+          console.error("[NEXTAUTH AUTHORIZE ERROR]", e);
+          throw new Error("AUTH_UPSERT_FAILED: " + (e?.message || String(e)));
+        }
       },
     }),
   ],
